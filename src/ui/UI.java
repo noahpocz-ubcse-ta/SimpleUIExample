@@ -21,8 +21,6 @@ public class UI implements Observer {
 	static int ROWS = 4;
 	static int COLUMNS = 5;
 	static int BUTTON_SIZE = 40;
-	private int _borderThickness;
-	
 	
 	public UI(Model m) {
 		
@@ -32,8 +30,6 @@ public class UI implements Observer {
 		/* The UI is taking care of itself here - it's making sure the model
 		 * will know to call it when it's time for visual updates. */
 		_model.addObserver(this);
-		
-		_borderThickness = 2;
 		
 		// Perform some setup tasks that only need to be done once.
 		initialize();
@@ -68,8 +64,7 @@ public class UI implements Observer {
 		thickness.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				_borderThickness += 1;
-				update(); //the change in the size of the buttons must be reflected
+				_model.increaseBorderThickness();
 			}
 		});
 		_mainPanel.add(thickness);
@@ -92,7 +87,8 @@ public class UI implements Observer {
 		for (int i = 0; i < ROWS * COLUMNS; i++) {
 			JButton b = new JButton();
 			b.setText("" + num);
-			b.setBorder(BorderFactory.createMatteBorder(_borderThickness, _borderThickness, _borderThickness, _borderThickness, Color.BLUE));
+			int t = _model.getBorderThickness();
+			b.setBorder(BorderFactory.createMatteBorder(t, t, t, t, Color.BLUE));
 			b.setPreferredSize(new Dimension((int) (BUTTON_SIZE * 1.6), BUTTON_SIZE));
 			
 			_buttonGrid.add(b);

@@ -8,11 +8,14 @@ public class Model implements Observable {
 	private ArrayList<Observer> _observers;
 	
 	private int _buttonNumber;
+	private int _borderThickness;
 	
 	public Model() {
 		
 		_observers = new ArrayList<Observer>();
+		
 		_buttonNumber = 0;
+		_borderThickness = 2;
 		
 	}
 	
@@ -23,8 +26,17 @@ public class Model implements Observable {
 		notifyObservers();
 	}
 
+	public void increaseBorderThickness() {
+		_borderThickness++;
+		notifyObservers();
+	}
+	
 	public int getNumber() {
 		return _buttonNumber;
+	}
+	
+	public int getBorderThickness() {
+		return _borderThickness;
 	}
 	
 	@Override
